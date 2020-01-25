@@ -44,13 +44,22 @@ void search(char *full,char *sub)
     for(int i = 1;i < sub_len ;i++)
     {
         x = x*2;
-        sum = sum*2 + full[i] - '0';
+        
+        sum = (sum*2 + full[i] - '0')%prime;
+        if(sum<0)
+            sum += prime;
+        
         sum_check = sum_check*2 + sub[i] - '0';
+        if(sum_check<0)
+            sum_check += prime;
+        
     }
     addNode(sum%prime,0,arr);
     for(int j=1;j<=full_len-sub_len;j++)
     {
-        sum = sum*2 - x*(full[j-1]-'0') + (full[j+sub_len-1] - '0');
+        sum = (sum*2 - x*(full[j-1]-'0') + (full[j+sub_len-1] - '0'))%prime;
+        if(sum<0)
+            sum += prime;
         addNode(sum%prime,j,arr);
     }
     int hashCheck = sum_check%prime;
